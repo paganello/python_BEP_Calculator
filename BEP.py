@@ -117,19 +117,20 @@ while i < 3:
         percentualiVenditeSingProdPerStato[i] = [(venditeSingProdPerStato[i][0]/tot)*100, (venditeSingProdPerStato[i][1]/tot)*100, (venditeSingProdPerStato[i][2]/tot)*100, (venditeSingProdPerStato[i][3]/tot)*100]
         j = j + 1
 
-i = 0               #da fare!
-tot = 0.0
+i = 0  
+j = 0
 while i < 3:
-    pTot = pTot + percentualiPerStato[i]
+    tot = 0
+    while j < 3
+        tot = tot + percentualiVenditeSingProdPerStato[j][i]
+        j = j + 1
+        print(tot)
+        
+    if tot != 100 :
+        print("Il totale non e' pari a 100 => inserimento errato!")
+    j = 0    
     i = i + 1
-if pTot != 100:
-    print("Il totale non e' pari a 100 => inserimento errato!")
 
-
-
-#costi di spedizione che consideriamo costanti
-costiSpedizioni_IT = [ 10.29, 11.15, 12.94, 13.12]
-costiSpedizioni_EU = [ 34, 39, 43, 45]
 
 i = 0
 while i < nArrProd:
