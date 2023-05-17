@@ -22,7 +22,7 @@ CF = costoCapannone + costoElettr + altriCostiImm + (costoDipH * numeroOreLavoro
 print("inserisci il numero di prodotti che compongono il mix di produzione:")
 nArrProd = int(input())
 
-prod = [init, init, init, init] * nArrProd
+prod = [init, init, init, init, init] * nArrProd
 
 i = 0
 while i < nArrProd:
@@ -52,8 +52,9 @@ while i < nArrProd:
     
     #print("Percentuale di vendita del prodotto " + str(i+1) + " in Grecia rispetto agli altri prodotti:")
     #mGR = float(input())/100
+    costoMedioSpedizione = 0.0
 
-    prod[i] = [costoLavDiretto, costoMagazzino, svalutazioneVestiti, p]
+    prod[i] = [costoLavDiretto, costoMagazzino, svalutazioneVestiti, p, costoMedioSpedizione]
 
     i = i+1
     print()
@@ -141,7 +142,15 @@ while i < 3:
 
 
 #Computo il costo per medio di spedizione per ogni prodotto
+# ovvero: costoMedioPesatoProd= (%venditeNazione * (%venditeSingProdNazione / 100) * costanteSpedizioneProdotto) + stessa cosa fatta per per le altre nazioni
+i = 0
+costoMedioProdotto = [init] * nArrProd
+while i < 3:
+    j = 0
     
+    while j < nArrProd:
+        
+        costoMedioProdotto[j][0] = costoMedioProdotto[j][0] + (percentualeTotPerStato[i] * (percentualiVenditeProdottiPerStato[i][nArrProd]))
     
     
     
