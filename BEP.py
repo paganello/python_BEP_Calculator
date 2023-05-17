@@ -144,13 +144,16 @@ while i < 3:
 #Computo il costo per medio di spedizione per ogni prodotto
 # ovvero: costoMedioPesatoProd= (%venditeNazione * (%venditeSingProdNazione / 100) * costanteSpedizioneProdotto) + stessa cosa fatta per per le altre nazioni
 i = 0
+j = 0
 costoMedioProdotto = [init] * nArrProd
+while j < nArrProd:     #inizializzo a zero i valori dell array
+    costoMedioProdotto[j][0] = 0.0
+    j = j + 1
+    
 while i < 3:
     j = 0
-    
     while j < nArrProd:
-        
-        costoMedioProdotto[j][0] = costoMedioProdotto[j][0] + (percentualeTotPerStato[i] * (percentualiVenditeProdottiPerStato[i][nArrProd]))
+        costoMedioProdotto[j][0] = (percentualeTotPerStato[i] * (percentualiVenditeProdottiPerStato[i][nArrProd]/100) * )
     
     
     
