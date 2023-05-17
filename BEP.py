@@ -60,8 +60,8 @@ while i < nArrProd:
 
 
 # inserimento delle percentuali di vendita nei singoli paesi
-totVenditePerStato = [init, init, init]
-venditeSingProdPerStato = [init, init, init, init] * 3
+totVenditePerStato = [init] * 3
+venditeSingProdPerStato = [[0 for _ in range(nArrProd)] for _ in range(3)]
 
 i = 0
 while i < 3:
@@ -73,13 +73,12 @@ while i < 3:
     if i == 2:
         print("*---------------------------------- GRECIA ----------------------------------*")
     t = int(input("Numero totale di vendite effettuate nel paese in questione: "))
-    totVenditePerStato[i] = t
-
-    a = int(input("Numero totale di vendite per prodotto A: "))
-    b = int(input("Numero totale di vendite per prodotto B: "))
-    c = int(input("Numero totale di vendite per prodotto C: "))
-    d = int(input("Numero totale di vendite per prodotto D: "))
-    venditeSingProdPerStato[i] = [a, b, c, d]
+    totVenditePerStato[i][0] = t
+    
+    j = 0
+    while j < nArrProd:
+        data = int(input("Numero totale di vendite per prodotto " + str(j+1) + ": "))
+        venditeSingProdPerStato[i][j] = data
 
     i = i+1
     print()
@@ -89,18 +88,21 @@ while i < 3:
 # computazione delle percentuali delle vendite generali per stato + verifica degli insermenti delle percentuali 
 i = 0
 tot = 0.0
-percentualePerStato = [init, init, init]    #il numero di satti e' 3 e non puo variare
-tot = totVenditePerStato[0] + totVenditePerStato[1] + totVenditePerStato[2]
+percentualeTotPerStato = [init] * 3    #il numero di stati e' 3 e non puo variare
 while i < 3:
-    percentualePerStato[i] = (totVenditePerStato[i]/tot)*100
+    tot = tot + totVenditePerStato[i]
+    i = i + 1
+    
+while i < 3:
+    percentualeTotPerStato[i][0] = (totVenditePerStato[i][0]/tot)*100
     i = i + 1
  
 i = 0
 tot = 0.0
 while i < 3:
-    pTot = pTot + percentualePerStato[i]
+    tot = tot + percentualeTotPerStato[i][0]
     i = i + 1
-if pTot != 100:
+if tot != 100:
     print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% !")
     print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
 
@@ -109,29 +111,32 @@ if pTot != 100:
 # computazione delle percentuali delle vendite dei singoli prodotti per stato + verifica degli insermenti delle percentuali
 i = 0
 tot = 0.0
-percentualiVenditeStato[3] = [init] * nArrProd  #array che per ogni posizione contiene la percentuale di vendita di un prodotto (si basa sul n prodotti)
+percentualiVenditeProdottiPerStato = [[0 for _ in range(nArrProd)] for _ in range(3)] #array che per ogni posizione contiene la percentuale di vendita di un prodotto (si basa sul n prodotti)
 
 while i < 3:
-    tot = venditeSingProdPerStato[i][0] + venditeSingProdPerStato[i][1] + venditeSingProdPerStato[i][2] + venditeSingProdPerStato[i][3]
-    i = i + 1
     j = 0
-    while j < 3:
-        percentualiVenditeSingProdPerStato[i] = [(venditeSingProdPerStato[i][0]/tot)*100, (venditeSingProdPerStato[i][1]/tot)*100, (venditeSingProdPerStato[i][2]/tot)*100, (venditeSingProdPerStato[i][3]/tot)*100]
+    while j < nArrProd:
+        tot = tot + venditeSingProdPerStato[i][j]
         j = j + 1
+       
+    j = 0
+    while j < nArrProd:
+        percentualiVenditeProdottiPerStato[i][j] = (venditeSingProdPerStato[i][j]/tot)*100
+        j = j + 1
+    i = i + 1
 
 i = 0  
-j = 0
 while i < 3:
     tot = 0
-    while j < 3
-        tot = tot + percentualiVenditeSingProdPerStato[j][i]
+    j = 0
+    while j < nArrProd:
+        tot = tot + percentualiVenditeProdottiPerStato[j][i]
         j = j + 1
         print(tot)
         
     if tot != 100 :
-        print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% !")
-        print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
-    j = 0    
+        print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% per il i prodotti venduti nella nazione " + str(i+1) + ".")
+        print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")  
     i = i + 1
 
 
