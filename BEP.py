@@ -60,7 +60,7 @@ while i < nArrProd:
 
 
 # inserimento delle percentuali di vendita nei singoli paesi
-VenditePerStato = [init, init, init]
+totVenditePerStato = [init, init, init]
 venditeSingProdPerStato = [init, init, init, init] * 3
 
 i = 0
@@ -73,7 +73,7 @@ while i < 3:
     if i == 2:
         print("*---------------------------------- GRECIA ----------------------------------*")
     t = int(input("Numero totale di vendite effettuate nel paese in questione: "))
-    VenditePerStato[i] = t
+    totVenditePerStato[i] = t
 
     a = int(input("Numero totale di vendite per prodotto A: "))
     b = int(input("Numero totale di vendite per prodotto B: "))
@@ -89,26 +89,28 @@ while i < 3:
 # computazione delle percentuali delle vendite generali per stato + verifica degli insermenti delle percentuali 
 i = 0
 tot = 0.0
-percentualiPerStato = [init, init, init]
-tot = VenditePerStato[0] + VenditePerStato[1] + VenditePerStato[2]
+percentualePerStato = [init, init, init]    #il numero di satti e' 3 e non puo variare
+tot = totVenditePerStato[0] + totVenditePerStato[1] + totVenditePerStato[2]
 while i < 3:
-    percentualiPerStato[i] = (VenditePerStato[i]/tot)*100
+    percentualePerStato[i] = (totVenditePerStato[i]/tot)*100
     i = i + 1
  
 i = 0
 tot = 0.0
 while i < 3:
-    pTot = pTot + percentualiPerStato[i]
+    pTot = pTot + percentualePerStato[i]
     i = i + 1
 if pTot != 100:
-    print("Il totale non e' pari a 100 => inserimento errato!")
+    print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% !")
+    print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
 
 
 
 # computazione delle percentuali delle vendite dei singoli prodotti per stato + verifica degli insermenti delle percentuali
 i = 0
 tot = 0.0
-percentualiVenditeSingProdPerStato = [init, init, init, init] * 3 
+percentualiVenditeStato[3] = [init] * nArrProd  #array che per ogni posizione contiene la percentuale di vendita di un prodotto (si basa sul n prodotti)
+
 while i < 3:
     tot = venditeSingProdPerStato[i][0] + venditeSingProdPerStato[i][1] + venditeSingProdPerStato[i][2] + venditeSingProdPerStato[i][3]
     i = i + 1
@@ -127,11 +129,27 @@ while i < 3:
         print(tot)
         
     if tot != 100 :
-        print("Il totale non e' pari a 100 => inserimento errato!")
+        print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% !")
+        print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
     j = 0    
     i = i + 1
 
 
+#Computo il costo per medio di spedizione per ogni prodotto
+    
+    
+    
+    
+    
+    
+#Computo il numero di vendite sufficinenti per il raggiungimento del BEP se vendessi un prodotto singolo
+i = 0
+BEPSingleProd[nArrProd]
+while < nArrProd:
+    BEPSingleProd[i] = 
+    
+
+    
 i = 0
 while i < nArrProd:
 
