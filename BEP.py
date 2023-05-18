@@ -14,6 +14,7 @@ costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
 
 # input + computazione costi fissi
 def inputCostiFissi():
+    print()
     print("Inserisci di seguito i dati sui costi fissi:")
     print()
     costoCapannone = float(input("Inserisci costo capannone annuo: "))
@@ -27,6 +28,7 @@ def inputCostiFissi():
 
 # Input dati sui prodotti
 nArrProd = int(input("inserisci il numero di prodotti che compongono il mix di produzione: "))
+print()
 prod = [init, init, init, init, init, init] * nArrProd 
 
 def inputProdotti():
