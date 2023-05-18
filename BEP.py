@@ -208,10 +208,11 @@ def printSingleProdBEPs():
 
         
 # Computa il BEP multiprodotto
-def computeMultiProdBEP():
-    
-
-
+def computeMultiProdBEP(CF):
+    i = 0
+    BEPMultiProd = init
+    BEPMultiProd = CF / (%A * BEPSingleProd[0]) + (%B * BEPSingleProd[1]) + (%C * BEPSingleProd[2]) + (%D * BEPSingleProd[4]) 
+    return BEPMultiProd
     
 
 
@@ -224,6 +225,9 @@ computeCostoSpedizioneMedio()
 computeSingleProdBEPs(CF)
 
 printSingleProdBEPs()
+print("il Break eaven point multiprodotto e': " + str(computeBEPMultiProd(CF)))
+
+
 
   
 
