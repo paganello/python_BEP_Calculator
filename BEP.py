@@ -83,63 +83,67 @@ def inputVendite():
         i = i+1
         print()
 
-'''
+
 # computazione delle percentuali delle vendite generali per stato + verifica degli insermenti delle percentuali 
-i = 0
-tot = 0.0
 percentualeTotPerStato = [init] * 3    #il numero di stati e' 3 e non puo variare
-while i < 3:
-    tot = tot + totVenditePerStato[i]
-    i = i + 1
+
+def computeGeneralPercentage():
+    i = 0
+    tot = 0.0
+    while i < 3:
+        tot = tot + totVenditePerStato[i]
+        i = i + 1
     
-while i < 3:
-    percentualeTotPerStato[i] = (totVenditePerStato[i]/tot)*100
-    i = i + 1
+    while i < 3:
+        percentualeTotPerStato[i] = (totVenditePerStato[i]/tot)*100
+        i = i + 1
  
-i = 0
-tot = 0.0
-while i < 3:
-    tot = tot + percentualeTotPerStato[i]
-    i = i + 1
+    i = 0
+    tot = 0.0
+    while i < 3:
+        tot = tot + percentualeTotPerStato[i]
+        i = i + 1
     
-if tot != 100:
-    print("ATTENZIONE!: Accuratezza pari a " + str(tot) + "% ")
-    print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
+    if tot != 100:
+        print("ATTENZIONE!: Accuratezza pari a " + str(tot) + "% ")
+        print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")
 
 
 # computazione delle percentuali delle vendite dei singoli prodotti per stato + verifica degli insermenti delle percentuali
-i = 0
-tot = 0.0
 percentualiVenditeProdottiPerStato = [[0 for _ in range(nArrProd)] for _ in range(3)] #array che per ogni posizione contiene la percentuale di vendita di un prodotto (si basa sul n prodotti)
 
-while i < 3:
-    j = 0
-    while j < nArrProd:
-        tot = tot + venditeSingProdPerStato[i][j]
-        j = j + 1
+
+def computeProductPercentagePerStato():
+    i = 0
+    tot = 0.0
+    while i < 3:
+        j = 0
+        while j < nArrProd:
+            tot = tot + venditeSingProdPerStato[i][j]
+            j = j + 1
        
-    j = 0
-    while j < nArrProd:
-        percentualiVenditeProdottiPerStato[i][j] = (venditeSingProdPerStato[i][j]/tot)*100
-        j = j + 1
-    i = i + 1
+        j = 0
+        while j < nArrProd:
+            percentualiVenditeProdottiPerStato[i][j] = (venditeSingProdPerStato[i][j]/tot)*100
+            j = j + 1
+        i = i + 1
 
-i = 0  
-while i < 3:
-    tot = 0
-    j = 0
-    while j < nArrProd:
-        tot = tot + percentualiVenditeProdottiPerStato[j][i]
-        j = j + 1
-        print(tot)
-    i = i + 1
+    i = 0  
+    while i < 3:
+        tot = 0
+        j = 0
+        while j < nArrProd:
+            tot = tot + percentualiVenditeProdottiPerStato[j][i]
+            j = j + 1
+            print(tot)
+        i = i + 1
         
-if tot != 100 :
-    print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% per il i prodotti venduti nella nazione " + str(i+1) + ".")
-    print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")  
-'''
+    if tot != 100 :
+        print("ATTENZIONE!: Accuratezza pari al " + str(tot) + "% per il i prodotti venduti nella nazione " + str(i+1) + ".")
+        print("Probabilmente i numeri di vendita non sono stati inseriti correttamente, oppure non sono del tutto coerenti.")  
 
-# Computo il costo per medio di spedizione per ogni prodotto in base al peso
+
+# Computo il costo medio di spedizione per ogni prodotto in base al peso e alla percentuale di vendita per stato (media pesata)
 # Ovvero: costoMedioPesatoProd= (%venditeNazione * (%venditeSingProdNazione / 100) * costanteSpedizioneProdotto) + stessa cosa fatta per per le altre nazioni
 #
 totProdVenduto = [init] * nArrProd
@@ -188,12 +192,48 @@ def computeCostoSpedizioneMedio():
 
 #Computo il numero di vendite sufficinenti per il raggiungimento del BEP se vendessi un prodotto singolo
 # prod[i] = [costoLavDiretto, costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
+costoMedioSpedizioneNonPesatoPerProdotto = [init] * nArrProd
+BEPSingleProd = [init] * nArrProd
+
 def computeSingleProdBEPs(CF):
+
+    while i < nArrProd:
+        costoMedioSpedizioneNonPesatoPerProdotto[i] = 0.0
+        i = i + 1
+
+    j = 0
+    while j < nArrProd:
+        i = 0
+        while i < 3:
+            if i == 0:
+                if(prod[j][4] <= 3):
+                    tmpSpedizioni = costiSpedizioni_IT[0]
+                if(prod[j][4] <= 5):
+                    tmpSpedizioni = costiSpedizioni_IT[1]
+                if(prod[j][4] <= 10):
+                    tmpSpedizioni = costiSpedizioni_IT[2]
+                if(prod[j][4] <= 20):
+                    tmpSpedizioni = costiSpedizioni_IT[3]
+                if(prod[j][4] <= 30):
+                    tmpSpedizioni = costiSpedizioni_IT[4]                
+            else :
+                if(prod[j][4] <= 3):
+                    tmpSpedizioni = costiSpedizioni_EU[0]
+                if(prod[j][4] <= 5):
+                    tmpSpedizioni = costiSpedizioni_EU[1]
+                if(prod[j][4] <= 10):
+                    tmpSpedizioni = costiSpedizioni_EU[2]
+                if(prod[j][4] <= 20):
+                    tmpSpedizioni = costiSpedizioni_EU[3]
+                if(prod[j][4] <= 30):
+                    tmpSpedizioni = costiSpedizioni_EU[4]
+
+            costoMedioSpedizioneNonPesatoPerProdotto[j] = costoMedioSpedizioneNonPesatoPerProdotto[j] + (tmpSpedizioni * (percentualeTotPerStato[i] / 100))
+
     i = 0
-    BEPSingleProd = [init] * nArrProd
     while i < nArrProd:
         tmpMdC = 0.0
-        tmpMdC = prod[i][3] - (prod[i][0] + prod[i][1] + prod[i][2] + prod[i][5])
+        tmpMdC = prod[i][3] - (prod[i][0] + prod[i][1] + prod[i][2] + costoMedioSpedizioneNonPesatoPerProdotto[i])
         BEPSingleProd[i] = CF / tmpMdC
         i = i + 1
 
@@ -208,12 +248,24 @@ def printSingleProdBEPs():
         print("Break eaven point del prodotto " + str(i+1) + ": " + str(BEPSingleProd[i]))
         i = i + 1
 
+
         
 # Computa il BEP multiprodotto
 def computeMultiProdBEP(CF):
+    tmpBEP = [init] * nArrProd
+
     i = 0
-    BEPMultiProd = init
-    BEPMultiProd = CF / (%A * BEPSingleProd[0]) + (%B * BEPSingleProd[1]) + (%C * BEPSingleProd[2]) + (%D * BEPSingleProd[4]) 
+    while i < nArrProd:
+        tmpMdC = 0.0
+        tmpMdC[i] = prod[i][3] - (prod[i][0] + prod[i][1] + prod[i][2] + prod[i][5])
+        i = i + 1
+ 
+    i = 0
+    while i < nArrProd:
+        totTmpMdC = (tmpMdC[i] * percentualeTotPerStato[i])
+        i = i + 1
+    BEPMultiProd = CF / totTmpMdC
+
     return BEPMultiProd
     
 
@@ -223,11 +275,15 @@ CF = inputCostiFissi()
 
 inputProdotti()
 inputVendite()
+
+computeGeneralPercentage()
+computeProductPercentagePerStato()
+
 computeCostoSpedizioneMedio()
 computeSingleProdBEPs(CF)
 
 printSingleProdBEPs()
-print("il Break eaven point multiprodotto e': " + str(computeBEPMultiProd(CF)))
+print("il Break eaven point multiprodotto e': " + str(computeMultiProdBEP(CF)))
 
 
 
