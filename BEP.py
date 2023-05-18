@@ -195,6 +195,7 @@ def computeSingleProdBEPs(CF):
         BEPSingleProd[i] = CF / tmpMdC
         i = i + 1
 
+        
 # Print i BEP prodotti singoli
 #
 BEPSingleProd = [init] * nArrProd
@@ -205,12 +206,16 @@ def printSingleProdBEPs():
         print("Break eaven point del prodotto " + str(i+1) + ": " + str(BEPSingleProd[i]))
         i = i + 1
 
+        
+# Computa il BEP multiprodotto
+def computeMultiProdBEP():
     
 
 
+    
 
 
-
+# MAIN:
 CF = inputCostiFissi()
 
 inputProdotti()
