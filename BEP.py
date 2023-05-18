@@ -7,6 +7,8 @@ init = 0.0
 #
 costiSpedizioni_IT = [ 10.29, 11.15, 12.94, 13.12, 14.17 ]
 costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
+#
+ORE_IN_UN_ANNO = 259
 
 
 
@@ -16,15 +18,17 @@ costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
 def inputCostiFissi():
     print()
     print("*------- COSTI FISSI -------*")
-    costoCapannone = float(input("Inserisci costo capannone annuo: "))
+    costoCapannone = float(input("Ccosto capannone annuo: "))
     ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
-    altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
-    costoDipH = float(input("Costo lavoro diretto per ora: "))
-    numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
     costoElettr = float(input("Costo elettricita' per Kw/h: "))
     numeroOreLavoroMac = float(input("Numero di ore al giorno di lavoro macchinario: "))
+    altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
+    nDipendenti = int(input("Numero di lavoratori assunti: "))
+    costoDipH = float(input("Costo lavoro diretto per ora: "))
+    numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
+
     print()
-    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * 259)) + (numeroOreLavoroDir * costoDipH)  + altriCostiImm
+    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * ORE_IN_UN_ANNO)) + ((numeroOreLavoroDir * ORE_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
     return CF
 
 # Input dati sui prodotti
