@@ -18,7 +18,7 @@ ORE_IN_UN_ANNO = 259
 def inputCostiFissi():
     print()
     print("*------- COSTI FISSI -------*")
-    costoCapannone = float(input("Ccosto capannone annuo: "))
+    costoCapannone = float(input("Costo capannone annuo: "))
     ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
     costoElettr = float(input("Costo elettricita' per Kw/h: "))
     numeroOreLavoroMac = float(input("Numero di ore al giorno di lavoro macchinario: "))
