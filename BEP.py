@@ -9,29 +9,27 @@ costiSpedizioni_IT = [ 10.29, 11.15, 12.94, 13.12, 14.17 ]
 costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
 #
 GIORNI_IN_UN_ANNO = 259
-#
-numeroOreLavoroMac = init
+
 
 
 
 
 
 # input + computazione costi fissi
-def inputCostiFissi():
-    print()
-    print("*------- COSTI FISSI -------*")
-    costoCapannone = float(input("Costo capannone annuo: "))
-    ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
-    costoElettr = float(input("Costo elettricita' per Kw/h: "))
-    numeroOreLavoroMac = float(input("Numero di ore al giorno di lavoro macchinario: "))
-    altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
-    nDipendenti = int(input("Numero di lavoratori assunti: "))
-    costoDipH = float(input("Costo lavoro diretto per ora: "))
-    numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
+print()
+print("*------- COSTI FISSI -------*")
+costoCapannone = float(input("Costo capannone annuo: "))
+ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
+costoElettr = float(input("Costo elettricita' per Kw/h: "))
+numeroOreLavoroMac = float(input("Numero di ore al giorno di lavoro macchinario: "))
+altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
+nDipendenti = int(input("Numero di lavoratori assunti: "))
+costoDipH = float(input("Costo lavoro diretto per ora: "))
+numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
 
-    print()
-    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
-    return CF
+print()
+CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
+
 
 # Input dati sui prodotti
 nArrProd = int(input("inserisci il numero di prodotti che compongono il mix di produzione: "))
@@ -245,18 +243,6 @@ def computeSingleProdBEPs():
         i = i + 1
 
 
-        
-# Print i BEP prodotti singoli
-#
-BEPSingleProd = [init] * nArrProd
-
-def printSingleProdBEPs():
-    i = 0
-    while i < nArrProd:
-        print("Break eaven point del prodotto " + str(i+1) + ": " + str(BEPSingleProd[i]))
-        i = i + 1
-
-        
 # Computa il BEP multiprodotto
 def computeMultiProdBEP():
     tmpMdC = [init] * nArrProd
@@ -280,29 +266,38 @@ def computeMultiProdBEP():
 # Compute mix ottimo
 maxProduzioneProdotti = [init] * nArrProd
 ricavoSingeProd = [init] * nArrProd
-ricavoMixVendita = init
+ricavoMixVendita = 0.0
 
 def computeMixOttimo():
 
     i = 0
     while i < nArrProd:
         maxProduzioneProdotti[i] = ((GIORNI_IN_UN_ANNO * numeroOreLavoroMac * 60) / prod[i][0]) * 4     #abbaimo 4 macchinari
+        print(GIORNI_IN_UN_ANNO)
+        print(numeroOreLavoroMac)
+        print(GIORNI_IN_UN_ANNO)
+        print(GIORNI_IN_UN_ANNO)
+        print("max prod: " + str(maxProduzioneProdotti[i]))
         i = i + 1
 
     tmpRicavoSingeProd = [init] * nArrProd
     i = 0
     while i < nArrProd:
         tmpRicavoSingeProd[i] = ((prod[i][5] / 100) * maxProduzioneProdotti[i]) * MdC[i]
+        print("tmpRic: " + str(tmpRicavoSingeProd[i]))
         i = i + 1
 
     i = 0
+    ricavoMixVendita = 0.0
     while i < nArrProd:
         ricavoMixVendita = ricavoMixVendita + tmpRicavoSingeProd[i]
+        print("ricavoMixVendita: " + str(ricavoMixVendita))
         i = i + 1
 
     i = 0
     while i < nArrProd:
         ricavoSingeProd[i] = maxProduzioneProdotti[i] * MdC[i]
+        print("ricSingProd: " + str(ricavoSingeProd[i]))
         i = i + 1
 
 
@@ -344,7 +339,6 @@ def printStatistics():
 
 
 # MAIN:
-CF = inputCostiFissi()
 
 inputProdotti()
 inputVendite()
@@ -354,10 +348,8 @@ computeProductPercentage()
 
 computeCostoSpedizioneMedio()
 computeSingleProdBEPs()
+computeMixOttimo()
 
-printSingleProdBEPs()
-
-print()
 printStatistics()
 
 
