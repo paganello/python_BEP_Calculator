@@ -30,7 +30,7 @@ def inputCostiFissi():
     numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
 
     print()
-    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
+    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * 36.1969112 *(numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
     return CF
 
 # Input dati sui prodotti
