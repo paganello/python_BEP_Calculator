@@ -8,7 +8,9 @@ init = 0.0
 costiSpedizioni_IT = [ 10.29, 11.15, 12.94, 13.12, 14.17 ]
 costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
 #
-ORE_IN_UN_ANNO = 259
+GIORNI_IN_UN_ANNO = 259
+#
+numeroOreLavoroMac = init
 
 
 
@@ -28,7 +30,7 @@ def inputCostiFissi():
     numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
 
     print()
-    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * ORE_IN_UN_ANNO)) + ((numeroOreLavoroDir * ORE_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
+    CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
     return CF
 
 # Input dati sui prodotti
@@ -41,17 +43,19 @@ def inputProdotti():
 
         print("*---------------------------------- " + str(i+1) + " ----------------------------------*")
 
+        minutiRealizzazione = float(input("Inserici in numero di minuti necessari per la realizzazione del prodotto: "))
+
+        peso = float(input("Inserici peso di spedizione del prodotto: "))
+
         costoMagazzino = float(input("Inserisci il costo variabile del magazzino per pacchetto prodotto: "))
 
         svalutazioneVestiti = float(input("Inserisci a quanto ammonta la svalutazione calcolata del pacchetto: "))
 
         p = float(input("Inserici il prezzo di vendita del prodotto: "))
 
-        peso = float(input("Inserici peso di spedizione del prodotto: "))
-
         costoMedioSpedizione = 0.0
 
-        prod[i] = [costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
+        prod[i] = [minutiRealizzazione, costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
 
         i = i+1
         print()
@@ -159,33 +163,33 @@ def computeCostoSpedizioneMedio():
         i = 0
         while i < 3:
             if i == 0:
-                if(prod[j][3] <= 3):
+                if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_IT[0]
-                if(prod[j][3] <= 5):
+                if(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_IT[1]
-                if(prod[j][3] <= 10):
+                if(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_IT[2]
-                if(prod[j][3] <= 20):
+                if(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_IT[3]
-                if(prod[j][3] <= 30):
+                if(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_IT[4]                
             else :
-                if(prod[j][3] <= 3):
+                if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_EU[0]
-                if(prod[j][3] <= 5):
+                if(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_EU[1]
-                if(prod[j][3] <= 10):
+                if(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_EU[2]
-                if(prod[j][3] <= 20):
+                if(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_EU[3]
-                if(prod[j][3] <= 30):
+                if(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_EU[4]
 
-            prod[j][4] = prod[j][4] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
+            prod[j][5] = prod[j][5] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
             totProdVenduto[j] = totProdVenduto[j] + venditeSingProdPerStato[i][j]
             i = i + 1 
 
-        prod[j][4] = prod[j][4] / totProdVenduto[j]
+        prod[j][5] = prod[j][5] / totProdVenduto[j]
         j = j + 1
 
 
@@ -193,11 +197,13 @@ def computeCostoSpedizioneMedio():
 # prod[i] = [costoLavDiretto, costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
 costoMedioSpedizioneNonPesatoPerProdotto = [init] * nArrProd
 BEPSingleProd = [init] * nArrProd
+MdC = [init] * nArrProd
 
 def computeSingleProdBEPs():
     i = 0
     while i < nArrProd:
         costoMedioSpedizioneNonPesatoPerProdotto[i] = 0.0
+        MdC[i] = 0.0
         i = i + 1
 
     j = 0
@@ -205,26 +211,26 @@ def computeSingleProdBEPs():
         i = 0
         while i < 3:
             if i == 0:
-                if(prod[j][3] <= 3):
+                if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_IT[0]
-                if(prod[j][3] <= 5):
+                if(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_IT[1]
-                if(prod[j][3] <= 10):
+                if(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_IT[2]
-                if(prod[j][3] <= 20):
+                if(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_IT[3]
-                if(prod[j][3] <= 30):
+                if(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_IT[4]                
             else :
-                if(prod[j][3] <= 3):
+                if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_EU[0]
-                if(prod[j][3] <= 5):
+                if(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_EU[1]
-                if(prod[j][3] <= 10):
+                if(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_EU[2]
-                if(prod[j][3] <= 20):
+                if(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_EU[3]
-                if(prod[j][3] <= 30):
+                if(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_EU[4]
 
             costoMedioSpedizioneNonPesatoPerProdotto[j] = costoMedioSpedizioneNonPesatoPerProdotto[j] + (tmpSpedizioni * (percentualeTotPerStato[i] / 100))
@@ -233,10 +239,11 @@ def computeSingleProdBEPs():
 
     i = 0
     while i < nArrProd:
-        tmpMdC = 0.0
-        tmpMdC = prod[i][2] - (+ prod[i][0] + prod[i][1] + costoMedioSpedizioneNonPesatoPerProdotto[i])
-        BEPSingleProd[i] = CF / tmpMdC
+        MdC[i] = prod[i][3
+                         ] - (+ prod[i][1] + prod[i][2] + costoMedioSpedizioneNonPesatoPerProdotto[i])
+        BEPSingleProd[i] = CF / MdC[i]
         i = i + 1
+
 
         
 # Print i BEP prodotti singoli
@@ -249,7 +256,6 @@ def printSingleProdBEPs():
         print("Break eaven point del prodotto " + str(i+1) + ": " + str(BEPSingleProd[i]))
         i = i + 1
 
-
         
 # Computa il BEP multiprodotto
 def computeMultiProdBEP():
@@ -258,9 +264,9 @@ def computeMultiProdBEP():
     
     i = 0
     while i < nArrProd:
-        tmpMdC[i] = prod[i][2] - (prod[i][0] + prod[i][1] + prod[i][4])
+        tmpMdC[i] = prod[i][3] - (prod[i][1] + prod[i][2] + prod[i][5])
         i = i + 1
- 
+
     i = 0
     while i < nArrProd:
         totTmpMdC = totTmpMdC + (tmpMdC[i] * (percentualiVenditeProdotti[i]/100))
@@ -270,6 +276,71 @@ def computeMultiProdBEP():
 
     return BEPMultiProd
     
+
+# Compute mix ottimo
+maxProduzioneProdotti = [init] * nArrProd
+ricavoSingeProd = [init] * nArrProd
+ricavoMixVendita = init
+
+def computeMixOttimo():
+
+    i = 0
+    while i < nArrProd:
+        maxProduzioneProdotti[i] = ((GIORNI_IN_UN_ANNO * numeroOreLavoroMac * 60) / prod[i][0]) * 4     #abbaimo 4 macchinari
+        i = i + 1
+
+    tmpRicavoSingeProd = [init] * nArrProd
+    i = 0
+    while i < nArrProd:
+        tmpRicavoSingeProd[i] = ((prod[i][5] / 100) * maxProduzioneProdotti[i]) * MdC[i]
+        i = i + 1
+
+    i = 0
+    while i < nArrProd:
+        ricavoMixVendita = ricavoMixVendita + tmpRicavoSingeProd[i]
+        i = i + 1
+
+    i = 0
+    while i < nArrProd:
+        ricavoSingeProd[i] = maxProduzioneProdotti[i] * MdC[i]
+        i = i + 1
+
+
+# Stampa risultati
+def printStatistics():
+    print("*------------------- STATISTICHE -------------------*\n")
+    
+    print("Totale costi fissi: " + str(CF) + "\n")
+
+    print("*------- Percentuali Di Vendita -------*")
+
+    print("Percentuale di vendite in Italia sul totale: " +  str(percentualeTotPerStato[0]))
+    print("Percentuale di vendite in Croazia sul totale: " +  str(percentualeTotPerStato[1]))
+    print("Percentuale di vendite in Grecia sul totale: " +  str(percentualeTotPerStato[2]) + "\n")
+
+    i = 0
+    while i < nArrProd:
+        print("Vendite del prodotto " + str(i+1) +" sul totale:" +  str(BEPSingleProd[i]))
+        i = i+1  
+
+
+    print("\n*--------- Break Eaven Points ---------*")
+    i = 0
+    while i < nArrProd:
+        print("BEP prodotto "+ str(i+1) +":" + str(BEPSingleProd[i]))
+        i = i+1
+    print("BEP multiprodotto: " + str(computeMultiProdBEP()))
+
+
+    print("\n*--------- Analisi di Mix Ottimale ---------*")
+    i = 0
+    while i < nArrProd:
+        print("Produzione di solo prodotto "+ str(i+1) +" => MON: " + str(ricavoSingeProd[i]))
+        i = i+1
+
+    print("\nMON basato sulle percentuali di vendita calcate sui dati inseriti: " + str(ricavoMixVendita))
+
+
 
 
 # MAIN:
@@ -287,9 +358,7 @@ computeSingleProdBEPs()
 printSingleProdBEPs()
 
 print()
-print("COSTI FISSI: " + str(CF))
-print("il Break eaven point multiprodotto e': " + str(computeMultiProdBEP()))
-
+printStatistics()
 
 
   
