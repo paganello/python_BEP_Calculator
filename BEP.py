@@ -138,11 +138,7 @@ def computeProductPercentage():
     i = 0
     while i < nArrProd:
         percentualiVenditeProdotti[i] = (tot2[i]/tot1)*100
-        print(percentualiVenditeProdotti[i])
         i = i + 1
-
-    print(tot1)
-    print(tot2)
 
 
 
@@ -164,31 +160,35 @@ def computeCostoSpedizioneMedio():
             if i == 0:
                 if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_IT[0]
-                if(prod[j][4] <= 5):
+                elif(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_IT[1]
-                if(prod[j][4] <= 10):
+                elif(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_IT[2]
-                if(prod[j][4] <= 20):
+                elif(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_IT[3]
-                if(prod[j][4] <= 30):
+                elif(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_IT[4]                
             else :
                 if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_EU[0]
-                if(prod[j][4] <= 5):
+                elif(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_EU[1]
-                if(prod[j][4] <= 10):
+                elif(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_EU[2]
-                if(prod[j][4] <= 20):
+                elif(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_EU[3]
-                if(prod[j][4] <= 30):
+                elif(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_EU[4]
 
             prod[j][5] = prod[j][5] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
+            print(prod[j][5])
+            print(venditeSingProdPerStato[i][j])
+            print(tmpSpedizioni)
             totProdVenduto[j] = totProdVenduto[j] + venditeSingProdPerStato[i][j]
             i = i + 1 
 
         prod[j][5] = prod[j][5] / totProdVenduto[j]
+        print("final: " + str(prod[j][5]))
         j = j + 1
 
 
