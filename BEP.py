@@ -144,7 +144,6 @@ def computeProductPercentage():
 
 
 
-
 # Computo il costo medio di spedizione per ogni prodotto in base al peso e alla percentuale di vendita per stato (media pesata)
 # Ovvero: costoMedioPesatoProd= (%venditeNazione * (%venditeSingProdNazione / 100) * costanteSpedizioneProdotto) + stessa cosa fatta per per le altre nazioni
 #
@@ -163,27 +162,30 @@ def computeCostoSpedizioneMedio():
             if i == 0:
                 if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_IT[0]
-                if(prod[j][4] <= 5):
+                elif(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_IT[1]
-                if(prod[j][4] <= 10):
+                elif(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_IT[2]
-                if(prod[j][4] <= 20):
+                elif(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_IT[3]
-                if(prod[j][4] <= 30):
+                elif(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_IT[4]                
             else :
                 if(prod[j][4] <= 3):
                     tmpSpedizioni = costiSpedizioni_EU[0]
-                if(prod[j][4] <= 5):
+                elif(prod[j][4] <= 5):
                     tmpSpedizioni = costiSpedizioni_EU[1]
-                if(prod[j][4] <= 10):
+                elif(prod[j][4] <= 10):
                     tmpSpedizioni = costiSpedizioni_EU[2]
-                if(prod[j][4] <= 20):
+                elif(prod[j][4] <= 20):
                     tmpSpedizioni = costiSpedizioni_EU[3]
-                if(prod[j][4] <= 30):
+                elif(prod[j][4] <= 30):
                     tmpSpedizioni = costiSpedizioni_EU[4]
 
             prod[j][5] = prod[j][5] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
+            print(prod[j][5])
+            print(venditeSingProdPerStato[i][j])
+            print(tmpSpedizioni)
             totProdVenduto[j] = totProdVenduto[j] + venditeSingProdPerStato[i][j]
             print("costo medio sped parz: " + str(prod[j][5]))
             print("vendidte sing prod per stato: " + str(venditeSingProdPerStato[i][j]))
@@ -192,7 +194,8 @@ def computeCostoSpedizioneMedio():
             i = i + 1 
 
         prod[j][5] = prod[j][5] / totProdVenduto[j]
-        print("costo medio sped: " + prod[j][5])
+
+        print("final: " + str(prod[j][5]))
         j = j + 1
 
 
