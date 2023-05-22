@@ -5,8 +5,8 @@ costoDipH = 0.0
 #
 init = 0.0
 #
-costiSpedizioni_IT = [ 10.29, 11.15, 12.94, 13.12, 14.17 ]
-costiSpedizioni_EU = [ 34, 39, 43, 45, 50 ]
+costiSpedizioni_IT = [10.29, 11.15, 12.94, 13.12, 14.17]
+costiSpedizioni_EU = [34, 39, 43, 45, 50]
 #
 GIORNI_IN_UN_ANNO = 259
 
@@ -21,20 +21,22 @@ print("*------- COSTI FISSI -------*")
 costoCapannone = float(input("Costo capannone annuo: "))
 ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
 costoElettr = float(input("Costo elettricita' per Kw/h: "))
-numeroOreLavoroMac = float(input("Numero di ore al giorno di lavoro macchinario: "))
+enerMagazzino = float(input("Energia consumata in Kw/h al netto dei macchinari: "))
+numeroOreLavoroMac = float(input("Numero di ore per giorno di lavoro: "))
 altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
 nDipendenti = int(input("Numero di lavoratori assunti: "))
 costoDipH = float(input("Costo lavoro diretto per ora: "))
 numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
 
 print()
-CF = costoCapannone + ammortamentoMacchinario + (costoElettr * 36.1969112 *(numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
+CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (enerMagazzino * numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
 
+ 
 
 
 # Input dati sui prodotti
 nArrProd = int(input("inserisci il numero di prodotti che compongono il mix di produzione: "))
-prod = [init, init, init, init, init] * nArrProd 
+prod = [[0 for _ in range(6)] for _ in range(nArrProd)]
 
 def inputProdotti():
     i = 0
@@ -138,11 +140,8 @@ def computeProductPercentage():
     i = 0
     while i < nArrProd:
         percentualiVenditeProdotti[i] = (tot2[i]/tot1)*100
-        print(percentualiVenditeProdotti[i])
         i = i + 1
 
-    print(tot1)
-    print(tot2)
 
 
 
@@ -186,9 +185,14 @@ def computeCostoSpedizioneMedio():
 
             prod[j][5] = prod[j][5] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
             totProdVenduto[j] = totProdVenduto[j] + venditeSingProdPerStato[i][j]
+            print("costo medio sped parz: " + str(prod[j][5]))
+            print("vendidte sing prod per stato: " + str(venditeSingProdPerStato[i][j]))
+            print("costo spedizione spedizione: " + str(tmpSpedizioni))
+            print("tot prod venduto: " + str(totProdVenduto[j]))
             i = i + 1 
 
         prod[j][5] = prod[j][5] / totProdVenduto[j]
+        print("costo medio sped: " + prod[j][5])
         j = j + 1
 
 
@@ -311,14 +315,14 @@ def printStatistics():
 
     i = 0
     while i < nArrProd:
-        print("Vendite del prodotto " + str(i+1) +" sul totale:" +  str(BEPSingleProd[i]))
+        print("Vendite del prodotto " + str(i+1) +" sul totale: " +  str(percentualiVenditeProdotti[i]))
         i = i+1  
 
 
     print("\n*--------- Break Eaven Points ---------*")
     i = 0
     while i < nArrProd:
-        print("BEP prodotto "+ str(i+1) +":" + str(BEPSingleProd[i]))
+        print("BEP prodotto "+ str(i+1) +": " + str(BEPSingleProd[i]))
         i = i+1
     print("BEP multiprodotto: " + str(computeMultiProdBEP()))
 
