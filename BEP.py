@@ -336,7 +336,7 @@ def printStatistics():
         print("Produzione di solo prodotto "+ str(i+1) +" => MON: " + str(ricavoSingeProd[i] - CF))
         i = i+1
 
-    print("\nMON basato sulle percentuali di vendita calcate sui dati inseriti: " + str(ricavoMixVendita - CF))
+    print("\nMON basato sulle percentuali di vendita calcate sui dati inseriti: " + str(ricavoMixVendita - CF) + "\n")
 
 
 
