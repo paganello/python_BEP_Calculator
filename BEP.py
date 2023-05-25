@@ -17,77 +17,93 @@ GIORNI_IN_UN_ANNO = 259
 
 
 # input + computazione costi fissi
-print()
-print("*------- COSTI FISSI -------*")
-costoCapannone = float(input("Costo capannone annuo: "))
-ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
-costoElettr = float(input("Costo elettricita' per Kw/h: "))
-enerMagazzino = float(input("Energia consumata in Kw/h al netto dei macchinari: "))
-numeroOreLavoroMac = float(input("Numero di ore per giorno di lavoro: "))
-altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
-nDipendenti = int(input("Numero di lavoratori assunti: "))
-costoDipH = float(input("Costo lavoro diretto per ora: "))
-numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
+#print()
+#print("*------- COSTI FISSI -------*")
+#costoCapannone = float(input("Costo capannone annuo: "))
+#ammortamentoMacchinario = float(input("Inserisci a quanto ammonta l'ammortamento dei macchinari per l'anno corrente: "))
+#costoElettr = float(input("Costo elettricita' per Kw/h: "))
+#enerMagazzino = float(input("Energia consumata in Kw/h al netto dei macchinari: "))
+#numeroOreLavoroMac = float(input("Numero di ore per giorno di lavoro: "))
+#altriCostiImm = float(input("Somma degli altri costi annui legeati all'immobile (es. Internet): "))
+#nDipendenti = int(input("Numero di lavoratori assunti: "))
+#costoDipH = float(input("Costo lavoro diretto per ora: "))
+#numeroOreLavoroDir = float(input("Numero di ore al giorno di lavoro diretto: "))
 
-print()
-CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (enerMagazzino * numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
-
- 
+#print()
+#CF = costoCapannone + ammortamentoMacchinario + (costoElettr * (enerMagazzino * numeroOreLavoroMac * GIORNI_IN_UN_ANNO)) + ((numeroOreLavoroDir * GIORNI_IN_UN_ANNO) * costoDipH * nDipendenti)  + altriCostiImm
+CF = 662780
+numeroOreLavoroMac = 8
 
 
 # Input dati sui prodotti
-nArrProd = int(input("inserisci il numero di prodotti che compongono il mix di produzione: "))
+#nArrProd = int(input("inserisci il numero di prodotti che compongono il mix di produzione: "))
+nArrProd = 4
 prod = [[0 for _ in range(6)] for _ in range(nArrProd)]
 
-def inputProdotti():
-    i = 0
-    while i < nArrProd:
 
-        print("*---------------------------------- " + str(i+1) + " ----------------------------------*")
+prod[0] = [30, 5, 13.333333, 110, 3, 0.0]
+prod[1] = [35, 7, 17.333333, 120, 5, 0.0]
+prod[2] = [50, 10, 22.666667, 160, 10, 0.0]
+prod[3] = [75, 10, 29.333333, 210, 20, 0.0]
+#def inputProdotti():
+#    i = 0
+#    while i < nArrProd:
+#
+#        print("*---------------------------------- " + str(i+1) + " ----------------------------------*")
+#
+#        minutiRealizzazione = float(input("Inserici in numero di minuti necessari per la realizzazione del prodotto: "))
+#
+#        peso = float(input("Inserici peso di spedizione del prodotto: "))
+#
+#        costoMagazzino = float(input("Inserisci il costo variabile del magazzino per pacchetto prodotto: "))
+#
+#        svalutazioneVestiti = float(input("Inserisci a quanto ammonta la svalutazione calcolata del pacchetto: "))
 
-        minutiRealizzazione = float(input("Inserici in numero di minuti necessari per la realizzazione del prodotto: "))
+#        p = float(input("Inserici il prezzo di vendita del prodotto: "))
 
-        peso = float(input("Inserici peso di spedizione del prodotto: "))
+#        costoMedioSpedizione = 0.0
 
-        costoMagazzino = float(input("Inserisci il costo variabile del magazzino per pacchetto prodotto: "))
+#        prod[i] = [minutiRealizzazione, costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
 
-        svalutazioneVestiti = float(input("Inserisci a quanto ammonta la svalutazione calcolata del pacchetto: "))
-
-        p = float(input("Inserici il prezzo di vendita del prodotto: "))
-
-        costoMedioSpedizione = 0.0
-
-        prod[i] = [minutiRealizzazione, costoMagazzino, svalutazioneVestiti, p, peso, costoMedioSpedizione]
-
-        i = i+1
-        print()
+#        i = i+1
+#        print()
 
 
 # Inserimento delle percentuali di vendita nei singoli paesi
 totVenditePerStato = [init] * 3
 venditeSingProdPerStato = [[0 for _ in range(nArrProd)] for _ in range(3)]
 
-def inputVendite():
-    i = 0
-    while i < 3:
+totVenditePerStato[0] = 40
+totVenditePerStato[1] = 25
+totVenditePerStato[2] = 35
 
-        if i == 0:
-            print("*---------------------------------- ITALIA ----------------------------------*")
-        if i == 1:
-            print("*---------------------------------- CROAZIA ---------------------------------*")
-        if i == 2:
-            print("*---------------------------------- GRECIA ----------------------------------*")
-        t = float(input("Numero totale di vendite effettuate nel paese in questione: "))
-        totVenditePerStato[i] = t
+venditeSingProdPerStato[0]= [16, 8, 4, 12]
+venditeSingProdPerStato[1]= [12.5, 7.5, 1.25, 3.75]
+venditeSingProdPerStato[2]= [21, 5.25, 1.75, 7]
+
+
+
+#def inputVendite():
+#    i = 0
+#    while i < 3:
+
+#        if i == 0:
+#            print("*---------------------------------- ITALIA ----------------------------------*")
+#        if i == 1:
+#            print("*---------------------------------- CROAZIA ---------------------------------*")
+#        if i == 2:
+#            print("*---------------------------------- GRECIA ----------------------------------*")
+#        t = float(input("Numero totale di vendite effettuate nel paese in questione: "))
+#        totVenditePerStato[i] = t
     
-        j = 0
-        while j < nArrProd:
-            data = float(input("Numero totale di vendite per prodotto " + str(j+1) + ": "))
-            venditeSingProdPerStato[i][j] = data
-            j = j + 1
+#        j = 0
+#        while j < nArrProd:
+#            data = float(input("Numero totale di vendite per prodotto " + str(j+1) + ": "))
+#            venditeSingProdPerStato[i][j] = data
+#            j = j + 1
 
-        i = i+1
-        print()
+#        i = i+1
+#        print()
 
 
 # computazione delle percentuali delle vendite generali per stato + verifica degli insermenti delle percentuali 
@@ -184,19 +200,19 @@ def computeCostoSpedizioneMedio():
                     tmpSpedizioni = costiSpedizioni_EU[4]
 
             prod[j][5] = prod[j][5] + (venditeSingProdPerStato[i][j] * tmpSpedizioni)
-            print(prod[j][5])
-            print(venditeSingProdPerStato[i][j])
-            print(tmpSpedizioni)
+            #print(prod[j][5])
+            #print(venditeSingProdPerStato[i][j])
+            #print(tmpSpedizioni)
             totProdVenduto[j] = totProdVenduto[j] + venditeSingProdPerStato[i][j]
-            print("costo medio sped parz: " + str(prod[j][5]))
-            print("vendidte sing prod per stato: " + str(venditeSingProdPerStato[i][j]))
-            print("costo spedizione spedizione: " + str(tmpSpedizioni))
-            print("tot prod venduto: " + str(totProdVenduto[j]))
+            #print("costo medio sped parz: " + str(prod[j][5]))
+            #print("vendidte sing prod per stato: " + str(venditeSingProdPerStato[i][j]))
+            #print("costo spedizione spedizione: " + str(tmpSpedizioni))
+            #print("tot prod venduto: " + str(totProdVenduto[j]))
             i = i + 1 
 
         prod[j][5] = prod[j][5] / totProdVenduto[j]
 
-        print("final: " + str(prod[j][5]))
+        #print("final: " + str(prod[j][5]))
         j = j + 1
 
 
@@ -274,18 +290,22 @@ def computeMultiProdBEP():
 
 def MixOttimo():
     c = [-65.34, -67.81, -96.20, -138.42]
-
     A = [[30, 35, 50, 75]]
-
     b = [497280]
 
-    opt = linprog(c, A_ub=A, b_ub=b, method='revised simplex')
-    print(opt)
+    opt = linprog(c, A_ub=A, b_ub=b, method='highs')
+    
+    print("\n*--------- Analisi di Mix Ottimale ---------*")
+    print("Mix per la massimizzazione del profitto: ")
+    print("1: " + str(opt.lower.residual[0]))
+    print("2: " + str(opt.lower.residual[1]))
+    print("3: " + str(opt.lower.residual[2]))
+    print("4: " + str(opt.lower.residual[3]))
+    print()
 
 # Compute mix ottimo
 maxProduzioneProdotti = [init] * nArrProd
 ricavoSingeProd = [init] * nArrProd
-ricavoMixVendita = 0.0
 
 def computeMixOttimo():
 
@@ -298,7 +318,7 @@ def computeMixOttimo():
     tmpRicavoSingeProd = [init] * nArrProd
     i = 0
     while i < nArrProd:
-        tmpRicavoSingeProd[i] = ((prod[i][5] / 100) * maxProduzioneProdotti[i]) * MdC[i]
+        tmpRicavoSingeProd[i] = ((percentualiVenditeProdotti[i] / 100) * maxProduzioneProdotti[i]) * MdC[i]
         #print("tmpRic: " + str(tmpRicavoSingeProd[i]))
         i = i + 1
 
@@ -315,6 +335,8 @@ def computeMixOttimo():
         #print("ricSingProd: " + str(ricavoSingeProd[i]))
         i = i + 1
 
+    return ricavoMixVendita
+
 
 
 
@@ -325,7 +347,7 @@ def printStatistics():
     
     print("Totale costi fissi: " + str(CF) + "\n")
 
-    print("*------- Percentuali Di Vendita -------*")
+    print("*------- Dati Di Vendita -------*")
 
     print("Percentuale di vendite in Italia sul totale: " +  str(percentualeTotPerStato[0]))
     print("Percentuale di vendite in Croazia sul totale: " +  str(percentualeTotPerStato[1]))
@@ -335,6 +357,20 @@ def printStatistics():
     while i < nArrProd:
         print("Vendite del prodotto " + str(i+1) +" sul totale: " +  str(percentualiVenditeProdotti[i]))
         i = i+1  
+    print()
+
+    i = 0
+    while i < nArrProd:
+        print("Costo di spedizione pesato del prodotto " + str(i+1) +" : " +  str(prod[i][5]))
+        i = i+1  
+    print()
+
+    i = 0
+    while i < nArrProd:
+        print("Margine di contribuzione del prodotto " + str(i+1) +" : " +  str(MdC[i]))
+        i = i+1
+        
+    print("\nMON basato sulle percentuali di vendita calcolate sui dati inseriti: " + str(r - CF))
 
 
     print("\n*--------- Break Eaven Points ---------*")
@@ -344,33 +380,30 @@ def printStatistics():
         i = i+1
     print("BEP multiprodotto: " + str(computeMultiProdBEP()))
 
-
-    print("\n*--------- Analisi di Mix Ottimale ---------*")
+    MixOttimo()
     i = 0
     while i < nArrProd:
         print("Produzione di solo prodotto "+ str(i+1) +" => MON: " + str(ricavoSingeProd[i] - CF))
         i = i+1
+    print()
 
-    print("\nMON basato sulle percentuali di vendita calcate sui dati inseriti: " + str(ricavoMixVendita - CF) + "\n")
 
 
 
 
 # MAIN:
 
-inputProdotti()
-inputVendite()
+#inputProdotti()
+#inputVendite()
 
 computeGeneralPercentage()
 computeProductPercentage()
 
 computeCostoSpedizioneMedio()
 computeSingleProdBEPs()
-computeMixOttimo()
+r = computeMixOttimo()
 
 printStatistics()
-
-MixOttimo()
 
   
 
