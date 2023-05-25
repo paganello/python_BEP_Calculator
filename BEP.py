@@ -1,4 +1,5 @@
-
+import numpy as np
+from scipy.optimize import linprog
 # Dichiarazione var globali
 #
 costoDipH = 0.0
@@ -270,6 +271,17 @@ def computeMultiProdBEP():
     return BEPMultiProd
     
 
+
+def MixOttimo():
+    c = [-65.34, -67.81, -96.20, -138.42]
+
+    A = [[30, 35, 50, 75]]
+
+    b = [497280]
+
+    opt = linprog(c, A_ub=A, b_ub=b, method='revised simplex')
+    print(opt)
+
 # Compute mix ottimo
 maxProduzioneProdotti = [init] * nArrProd
 ricavoSingeProd = [init] * nArrProd
@@ -302,6 +314,9 @@ def computeMixOttimo():
         ricavoSingeProd[i] = maxProduzioneProdotti[i] * MdC[i]
         #print("ricSingProd: " + str(ricavoSingeProd[i]))
         i = i + 1
+
+
+
 
 
 # Stampa risultati
@@ -355,6 +370,7 @@ computeMixOttimo()
 
 printStatistics()
 
+MixOttimo()
 
   
 
